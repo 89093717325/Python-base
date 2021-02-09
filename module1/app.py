@@ -1,12 +1,17 @@
-def is_arguments_for_substr_correct(string, index, length):
-    if index < 0:
-        return False
-    elif length < 0:
-        return False
-    elif index > len(string) - 1:
-        return False
-    elif index + length > len(string):
-        return False
-    return True
+def reverse_string(string):
+    index = len(string) - 1
+    reversed_string = ''
 
-is_arguments_for_substr_correct('Привет', 5, 14)
+    while index >= 0:
+        current_char = string[index]
+        reversed_string = reversed_string + current_char
+        # То же самое через интерполяцию
+        # reversed_string = "{}{}".format(reversed_string, current_char)
+        index = index - 1
+
+    return reversed_string
+
+
+reverse_string('Game Of Thrones')  # 'senorhT fO emaG'
+# Проверка нейтрального элемента
+reverse_string('')
