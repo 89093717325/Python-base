@@ -15,3 +15,4 @@ def reverse_string(string):
 reverse_string('Game Of Thrones')  # 'senorhT fO emaG'
 # Проверка нейтрального элемента
 reverse_string('')
+print('new_string')
