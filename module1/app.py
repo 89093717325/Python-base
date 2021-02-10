@@ -13,3 +13,4 @@ def reverse_string(string):
 reverse_string('Game Of Thrones')  
 reverse_string('')
 print('new_string')
+print("изменения, внесенные из github")
