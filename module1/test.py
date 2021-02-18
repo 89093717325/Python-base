@@ -1,48 +1,32 @@
-cities = ['Москва', 'Париж', 'Лондон']
+def sort_list(my_list, direction=None):
+    
+    # Если direction не указан, то просто возвращаем параметр my_list
+    if direction is None:
+        return my_list
 
+    for i in range(len(my_list)):
+        for j in range(i, len(my_list)):            
+            if (direction == 1 and my_list[i] > my_list[j]) or (direction != 1 and my_list[i] < my_list[j]):
+                temp = my_list[i]
+                my_list[i] = my_list[j]
+                my_list[j] = temp
 
-users = [{'name': 'Иван', 'age': 35},
-         {'name': 'Мария', 'age': 22},
-         {'name': 'Соня', 'age': 20}]
+    return my_list
 
+list1 = [4, -2, 5, 3, -1 , 1, 0, 5, 2]
+list2 = [5, 3, 2, 5, 6 , -1, 0, -5, 2]
+list3 = [7, 2, 4, 1, -1 , 7, 3, -5, 0]
+list4 = [2, -5, 6, 1, 0 , -1, -2, -3, 9]
+list5 = [9, 0, 1, 2, 9 , 3, -1, 4, 2]
 
-tourists = [{'user': users[0], 'city': cities[0]},
-            {'user': users[1], 'city': cities[1]},
-            {'user': users[2], 'city': cities[2]}]
+sort_list(list1, 1)
+sort_list(list2)
+sort_list(list3, 1)
+sort_list(list4)
+sort_list(list5, 0)
 
-
-city = input('Введите город: ')
-try:
-    #проверяем введено ли значение
-    city[0]
-except IndexError:
-    #если значение не введено
-    print('Вы забыли ввести город!')
-#ДАЛЬШЕ ЕСЛИ ЗНАЧЕНИЕ ВВЕДЕНО
-else:
-#приводим переменную 'city' к виду
-#переменных в списке, т.е. обрезаем
-#пробелы и переводим первую букву
-#к верхнему регистру
-    city = city.strip().capitalize()
-
-
-#проверяем переменную 'city' 
-#на вхождение в список 'cities'
-#если нет, то падаем в блок 'else'
-    if city in cities:
-	#если да, то начинаем работать со
-	#списком словарей 'tourists'
-	    for i in tourists:
-		#перебираем ключи словарей
-		    for key in i:
-			#если ключ словаря равен
-			#значению нашей переменной
-			#city, то распарсиваем этот словарь
-			    if i[key] == city:
-				    for j in i:
-					    if j == 'user':
-						#выводим конечное сообщение
-						    print("Турист {} возраст {}. Посетил город {}".format(i[j]['name'], i[j]['age'], city))
-    else:
-        print("Нет такого города...")
+print(list1)
+print(list2)
+print(list3)
+print(list4)
+print(list5)
