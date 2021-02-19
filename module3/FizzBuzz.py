@@ -9,4 +9,4 @@ for i in range (1000, 20001):
         print('Buzz')
     else:
         print(i)
-print(sum)
+print('Сумма всех FizzBuzz= ', str(sum))
