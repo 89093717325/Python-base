@@ -44,6 +44,8 @@ for log in excel_logs_dict:
     for j in log['Купленные товары'].split(','):
         items_by_month[j.strip() + str(log['Дата посещения'].month)] += 1
     browsers_by_month[log['Браузер'] + str(log['Дата посещения'].month)] += 1
+print(items_by_month)
+print(browsers_by_month)
 
 #Вычисляем самые популярные и самые не популярные товары среди м и ж
 male_items = []
@@ -68,6 +70,7 @@ female_items_low = female_items_counter.most_common()[:-(len(female_items_counte
 print(f'Самый популярный товар среди женщин: {female_items_top}')
 print(f'Самый не популярный товар среди женщин: {female_items_low}')
 
+"""
 #Записываем полученные данные в файл "report"
 wb = load_workbook(filename='report.xlsx')
 sheet = wb['Sheet1']
@@ -100,4 +103,4 @@ sheet['B32'] = female_items_top[0][0]
 sheet['B33'] = male_items_low[0]
 sheet['B34'] = female_items_low[0]
 
-wb.save('report.xlsx')
+wb.save('report.xlsx')"""

@@ -1,60 +1,60 @@
-def update_list(object_list, new_object):
+GENDER_MALE = 'm'
+GENDER_FEMALE = 'f'
+
+
+# Список пользователей
+user_list = [{'name': 'Иван', 'gender': GENDER_MALE},
+             {'name': 'Петр', 'gender': GENDER_MALE},
+             {'name': 'Марья', 'gender': GENDER_FEMALE},
+             {'name': 'Дарья', 'gender': GENDER_FEMALE},
+             {'name': 'Юлия', 'gender': GENDER_FEMALE}, ]
+
+# Список товаров
+item_list = [{'title': 'Часы', 'cost': 9800},
+             {'title': 'Кофемашина', 'cost': 23500},
+             {'title': 'Фитнес-браслет', 'cost': 13200},
+             {'title': 'Айфон', 'cost': 73900},
+             {'title': 'Чехол для телефона', 'cost': 250}, ]
+
+# Журнал регистрации - каждая запись в журнале содержит сведения о покупке
+log = [{'user': user_list[0], 'purchases': [item_list[0], item_list[1], item_list[2]]},
+       {'user': user_list[1], 'purchases': [item_list[0], item_list[2]]},
+       {'user': user_list[2], 'purchases': [item_list[2], item_list[3]]},
+       {'user': user_list[3], 'purchases': [item_list[2], item_list[3]]},
+       {'user': user_list[4], 'purchases': [item_list[4], item_list[2]]}, ]
+
+# Создадим список для хранения популярных товар: popular_items.
+# Этот список будет состоять из словарей следующей структуры:
+# {
+#     'title':    наименование товара
+#     'quantity': количество проданных товаров
+# }
+popular_items = []
+
+# Обходим все записи из списка log
+for record in log:
     
-    # в переменной result будем хранить результат выполнения функции
-    # True - если элемент добавили в список
-    # False - если не добавили
-    # По умолчанию присваиваем в result значение False
-    result = False
+    # Для каждой записи из списка 'log' в цикле обходим все записи из списка 'purchases'
+    for item in record['purchases']:
+        
+        # Получаем название купленного товара
+        purchase_title = item['title']
 
-    # Ищем элемент в списке по ключу title у объекта new_object
-    # Если нашли, то присваиваем переменной found значение True
-    found = False
-    for i in object_list:
-        if i['title'] == new_object['title']:
-            found = True
-
-    # Если такого элемента в списке нет (т.е. found == False), то добавляем объект new_object в список object_list
-    # Если такой элемент там уже есть, то ничего не делаем
-    if not found:
-        object_list.append(new_object)
-        result = True
-
-    return result
-
-
-item_list = [{'title': 'Яблоко', 'is_fruit': True},
-             {'title': 'Апельсин', 'is_fruit': True},
-             {'title': 'Банан', 'is_fruit': True},
-             {'title': 'Автомобиль', 'is_fruit': False},
-             {'title': 'Телефон', 'is_fruit': False},
-             {'title': 'Груша', 'is_fruit': True}, ]
-
-# Пользовательский ввод данных
-# Введенные пользователем значения, сохраняем в новые переменные
-new_object_title = input('Введите название элемента: ')
-new_object_is_fruit_text = input('Это фрукт? (Y/N): ')
-
-# Устанавливаем значение по умолчанию для переменной, в которой будет хранится тип объекта
-new_object_is_fruit = None
-
-# Проверяем какой тип фрукта выбрал пользователь:
-# Если пользователь ввел 'y', то меняем переменную new_object_is_fruit на True.
-# Если пользователь ввел 'n', то меняем переменную new_object_is_fruit на False.
-# Если пользователь ввел что-то отличное от 'y' или 'n', то значение переменной new_object_is_fruit остается = None
-# Сравнение выполняем в нижнем регистре.
-if new_object_is_fruit_text.lower() == 'y':
-    new_object_is_fruit = True
-elif new_object_is_fruit_text.lower() == 'n':
-    new_object_is_fruit = False
-    
-if new_object_is_fruit is not None:
-    # Если значение переменной new_object_is_fruit не None, 
-    # то добавляем элемент в список
-    element_added = update_list(item_list, {'title': new_object_title, 'is_fruit': new_object_is_fruit})
-    if element_added:
-        print('Добавили новый элемент')
-    else:
-        print('Такой элемент уже есть в списке')
-    print(item_list)
-else:
-    print('Не удалось определить вид объекта')
+        # Ищем купленный товар в списке popular_items по ключу 'title'
+        found = False
+        for popular_item in popular_items:
+            # Если нашли товар, то увеличиваем значение ключа 'quantity' на 1
+            # и выходим из цикла, используя оператор break
+            if popular_item['title'] == purchase_title:
+                popular_item['quantity'] += 1
+                found = True
+                break
+        
+        # Если купленный товар не найден в списке popular_items,
+        # то добавляем его и ставим количество (quantity) = 1
+        if not found:
+            popular_items.append({'title': purchase_title, 'quantity': 1})
+            
+# Выводим продажи по каждому товару
+for popular_item in popular_items:
+    print(f"Количество продаж товара {popular_item['title']} = {popular_item['quantity']}")

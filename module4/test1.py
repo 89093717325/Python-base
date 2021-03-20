@@ -42,19 +42,19 @@ for record in log:
 
         # Ищем купленный товар в списке popular_items по ключу 'title'
         found = False
-        i = 0
-        while not found and (i < len(popular_items) ):
-            if popular_items[i]['title'] == purchase_title:
-                popular_items[i]['quantity'] += 1
+        for popular_item in popular_items:
+            # Если нашли товар, то увеличиваем значение ключа 'quantity' на 1
+            # и выходим из цикла, используя оператор break
+            if popular_item['title'] == purchase_title:
+                popular_item['quantity'] += 1
                 found = True
-            i += 1
-
+                break
+        
+        # Если купленный товар не найден в списке popular_items,
+        # то добавляем его и ставим количество (quantity) = 1
         if not found:
-         popular_items.append({'title': purchase_title, 'quantity': 1})
-
-#сохраняем результат выполнения программы
-log_result = []
+            popular_items.append({'title': purchase_title, 'quantity': 1})
+            
 # Выводим продажи по каждому товару
 for popular_item in popular_items:
     print(f"Количество продаж товара {popular_item['title']} = {popular_item['quantity']}")
-    log_result.append(f"Количество продаж товара {popular_item['title']} = {popular_item['quantity']}")
