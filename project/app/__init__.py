@@ -1,6 +1,5 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-# Импортируем пакет Migrate для работы с миграциями
 from flask_migrate import Migrate
 
 

@@ -4,6 +4,7 @@ from flask import render_template, request
 from datetime import datetime
 from collections import defaultdict
 
+
 @app.route('/')
 def index():
     
@@ -31,9 +32,17 @@ def create_auto():
         auto_img2 = request.form['img2']
         auto_img3 = request.form['img3']
 
-
-        db.session.add(Car(name=auto_name, price=auto_price, description=auto_description, transmission=auto_transmission, img = auto_img, img1 = auto_img1, img2 = auto_img2, img3 = auto_img3))
-
+        car_instance = Car()
+        car_instance.name = auto_name
+        car_instance.price = auto_price
+        car_instance.description = auto_description
+        car_instance.transmission = auto_transmission
+        car_instance.img = auto_img
+        car_instance.img1 = auto_img1
+        car_instance.img2 = auto_img2
+        car_instance.img3 = auto_img3
+ 
+        db.session.add(car_instance)
         db.session.commit()
 
         context = {
@@ -60,16 +69,7 @@ def auto_detail(car_id):
     Rent_list = Rent.query.filter_by(car_id=car_id).all()
 
     context = {
-        'id': car.id,
-        'available': car.available,
-        'name': car.name,
-        'description': car.description,
-        'price': car.price,
-        'transmission': car.transmission,
-        'img': car.img,
-        'img1': car.img1,
-        'img2': car.img2,
-        'img3': car.img3,
+        'car': car,
         'rent_list': Rent_list,
     }
 
@@ -114,17 +114,7 @@ def rent_auto(car_id):
 
     Rent_list = Rent.query.filter_by(car_id=car_id).all()
     context = {
-        'id': car.id,
-        'car_id': car.id,
-        'available': car.available,
-        'name': car.name,
-        'description': car.description,
-        'price': car.price,
-        'transmission': car.transmission,
-        'img': car.img,
-        'img1': car.img1,
-        'img2': car.img2,
-        'img3': car.img3,
+        'car': car,
         'rent_list': Rent_list,
     }
 
@@ -176,16 +166,7 @@ def edit_auto(car_id):
     db.session.commit()
 
     context = {
-    'id': car.id,
-    'available': car.available,
-    'name': car.name,
-    'description': car.description,
-    'price': car.price,
-    'transmission': car.transmission,
-    'img': car.img,
-    'img1': car.img1,
-    'img2': car.img2,
-    'img3': car.img3,
+        'car': car,
     }
 
     return render_template('edit_auto.html', **context)
@@ -203,18 +184,8 @@ def rental_log():
         for rent in Rent_list:
             if car.id == rent.car_id and rent.date_and_time_rent_end != None:
                 counter_list[car.id] += 1
-
-    for car in Car_list:
-        for rent in Rent_list:
-            if car.id == rent.car_id and rent.date_and_time_rent_end != None:
                 total_time_list[car.id] += (rent.date_and_time_rent_end - rent.date_and_time_rent_start).seconds / 60
-
-    for car in Car_list:
-        for rent in Rent_list:
-            if car.id == rent.car_id and rent.date_and_time_rent_end != None:
                 total_cost[car.id] += ((rent.date_and_time_rent_end - rent.date_and_time_rent_start).seconds / 60)*car.price
-
-
 
     context = {
     'Car_list': Car_list,
@@ -225,3 +196,4 @@ def rental_log():
     }
 
     return render_template('rental_log.html', **context)
+
